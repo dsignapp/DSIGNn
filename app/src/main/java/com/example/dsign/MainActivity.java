@@ -7,17 +7,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Matrix;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public class MainActivity extends AppCompatActivity {
 
     ImageView mImageView;
     Button mButton;
+    Button mButton1;
+    Button mButton2;
 
     private static final int IMAGE_PICK_CODE =1000;
     private static final int PERMISSION_CODE  =1001;
@@ -32,9 +38,13 @@ public class MainActivity extends AppCompatActivity {
 
         //VIEWS
         mImageView= findViewById((R.id.imageView));
-        mButton = findViewById((R.id.button));
+        mButton = findViewById((R.id.permission));
+        mButton1 = findViewById(R.id.flipleft);
+        mButton2 = findViewById(R.id.flipright);
+        public static final int FLIP_VERTICAL=1;
+        public static final int FLIP_HORIZONTAL = 2;
 
-        mButton.setOnClickListener(new View.OnClickListener() {
+        mButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -54,6 +64,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        mButton1.setOnClickListener(new OnClickListener() {
+
+            @Override
+            protected void onClick(Bundle savedInstanceState) {
+                super.onClick(savedInstanceState);
+                setContentView(R.layout.activity_main);
+                mImageView = (ImageView) findViewById(R.id.imageView);
+
+                mImageView.setImageBitmap(flipImage(BitmapFactory.decodeResource(getResources(), R.drawable.car), 2));
+            }
+            public Bitmap flipImage(Bitmap src, int type) {
+                Matrix matrix = new Matrix();
+
+                matrix.preScale(1.0f, -1.0f);
+            }
+                        return Bitmap.createBitmap(src, 0, 0,src..getWidth(),
+
+
+
+            }
+        });
+
     }
 
     private void pickImageFromGallery() {
